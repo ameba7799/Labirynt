@@ -37,6 +37,13 @@ find_package(SFML 2 COMPONENTS graphics audio REQUIRED)
 
 add_executable(LABIRYNT
         main.cpp
-        )
+        Maze.h
+        Maze.cpp
+        MazeView.h
+        MazeView.cpp
+        MazeGame.h
+        MazeGame.cpp
+        Array2D.h
+)
 
 target_link_libraries(LABIRYNT sfml-graphics sfml-audio)
