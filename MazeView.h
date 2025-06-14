@@ -3,9 +3,8 @@
 
 #include "Maze.h"
 #include <SFML/Graphics.hpp>
+#include "Parameters.h"
 
-#define FIELDSIZE 100
-#define MARGIN FIELDSIZE*0.2
 
 
 
@@ -18,14 +17,22 @@ private:
     sf::RectangleShape downWall;
     sf::RectangleShape leftWall;
     sf::RectangleShape upWall;
+    sf::CircleShape end;
+
+    sf::Sprite instruct;
+    sf::Texture instructTexture;
 
     void createWall(sf::RectangleShape &wall);
     void createBackground();
+    void createEnd();
+    void createInstructions();
     void drawField(sf::RenderWindow &window, int row, int col);
+    void drawEnd(sf::RenderWindow &window);
 
 public:
     MazeView(Maze &maze);
-    void draw(sf::RenderWindow &window);
+    void drawGame(sf::RenderWindow &window);
+    void drawInstruct(sf::RenderWindow &window);
 
     void test(sf::RenderWindow &window);
 };

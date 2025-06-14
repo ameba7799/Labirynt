@@ -4,32 +4,13 @@
 #include "MazeView.h"
 
 
-Maze::Maze() {
-    width = 3;
-    height = 3;
-    maze.resize(3, 3);
-
-    maze[0][0] = {true, false, false, false};
-    maze[0][1] = {false, true, true, false};
-    maze[0][2] = {false, true, false, false};
-    maze[1][0] = {true, true, false, false};
-    maze[1][1] = {false, true, true, true};
-    maze[1][2] = {false, true, false, true};
-    maze[2][0] = {false, false, false, true};
-    maze[2][1] = {true, false, false, true};
-    maze[2][2] = {false, false, true, true};
-}
-
-
 Maze::Maze(int width, int height) {
     this->width = width;
     this->height = height;
-    maze.resize(width, height);
+    maze.resize(height, width);
 
     create ();
 }
-
-
 
 
 void Maze::setStart() {
@@ -37,11 +18,24 @@ void Maze::setStart() {
 }
 
 void Maze::setEnd() {
-    //TODO wymyślić jak znaleść koniec
+    Position pos = {0,0};
+    int maxNum = 0;
+    for (int row = 0; row < height; row++) {
+        for (int col = 0; col < width; col++) {
+           if (maze[row][col].distans > maxNum) {
+               pos.row = row;
+               pos.col = col;
+               maxNum = maze[row][col].distans;
+           }
+        }
+    }
+
+    end = pos;
 }
 
 void Maze::create() { //już za trzecim razem coś działa
     setStart();
+    currentPos = start;
     clearMaze();
 
     Position pos;
@@ -52,6 +46,7 @@ void Maze::create() { //już za trzecim razem coś działa
     options.reserve(4);
 
     toConnect.push_back({start.row, start.col});
+    maze[start.row][start.col].distans = 0;
 
     while (!toConnect.empty()) {
         help = rand() % toConnect.size();
@@ -76,7 +71,7 @@ void Maze::create() { //już za trzecim razem coś działa
 void Maze::clearMaze() {
     for (int row = 0; row < height; row++) {
         for (int col = 0; col < width; col++) {
-            maze[row][col] = {false, false, false, false};
+            maze[row][col] = {false, false, false, false, 0};
         }
     }
 }
@@ -86,29 +81,33 @@ Position Maze::connect(int row, int col, Direction dir) {
     case Right:
         maze[row][col].right = true;
         maze[row][col+1].left = true;
+        maze[row][col+1].distans = maze[row][col].distans+1;
         return{row,col+1};
     case Down:
         maze[row][col].down = true;
         maze[row+1][col].up = true;
+        maze[row+1][col].distans = maze[row][col].distans+1;
         return{row+1,col};
     case Left:
         maze[row][col].left = true;
         maze[row][col-1].right = true;
+        maze[row][col-1].distans = maze[row][col].distans+1;
         return{row,col-1};
     case Up:
         maze[row][col].up = true;
         maze[row-1][col].down = true;
+        maze[row-1][col].distans = maze[row][col].distans+1;
         return{row-1,col};
     }
 }
 
 
-int Maze::getWidth() const {
-    return width;
-}
-
 int Maze::getHeight() const {
     return height;
+}
+
+int Maze::getWidth() const {
+    return width;
 }
 
 bool Maze::isRightOpen(int row, int col) const {
@@ -131,11 +130,22 @@ bool Maze::isUpOpen(int row, int col) const {
     return maze[row][col].up;
 }
 
+Position Maze::getStartPosition() const {
+    return start;
+}
+
+Position Maze::getEndPosition() const {
+    return end;
+}
+
+Position Maze::getCurrentPosition() const {
+    return currentPos;
+}
+
 
 bool Maze::isValid(int row, int col) const {
-
-    if (row < 0 || row >= width) {return false;}
-    if (col < 0 || col >= height) {return false;}
+    if (row < 0 || row >= height) {return false;}
+    if (col < 0 || col >= width) {return false;}
     return true;
 }
 

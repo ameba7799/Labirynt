@@ -1,8 +1,5 @@
 #include "MazeView.h"
 
-#define BACKGROUNDCOLOR sf::Color(224,224,224)
-#define WALLCOLOR sf::Color(96,96,96)
-
 
 
 MazeView::MazeView(Maze& maze) : maze(maze) {
@@ -21,6 +18,9 @@ MazeView::MazeView(Maze& maze) : maze(maze) {
     upWall.setRotation(-90);
 
     createBackground();
+    createEnd();
+
+    createInstructions();
 }
 
 void MazeView::createWall(sf::RectangleShape& wall) {
@@ -34,16 +34,31 @@ void MazeView::createBackground() {
     background.setPosition(sf::Vector2f(MARGIN, MARGIN));
 }
 
+void MazeView::createEnd() {
+    end.setRadius(FIELDSIZE*0.2);
+    end.setFillColor(ENDCOLOR);
+    end.setOrigin(-FIELDSIZE*0.3, -FIELDSIZE*0.3);
+}
 
-void MazeView::draw(sf::RenderWindow &window) {
+void MazeView::createInstructions() {
+    instructTexture.loadFromFile("../instrukcje.png");
+    instruct.setTexture(instructTexture);
+    instruct.setScale(WINWIDTH/instructTexture.getSize().x, WINHEIGHT/instructTexture.getSize().y);
+    instruct.setPosition(0,0);
+}
+
+
+void MazeView::drawGame(sf::RenderWindow &window) {
     window.clear(WALLCOLOR);
     window.draw(background);
 
-    for (int row = 0; row < maze.getWidth(); row++) {
-        for (int col = 0; col < maze.getHeight(); col++) {
+    for (int row = 0; row < maze.getHeight(); row++) {
+        for (int col = 0; col < maze.getWidth(); col++) {
             drawField(window, row, col);
         }
     }
+
+    drawEnd(window);
 }
 
 void MazeView::drawField(sf::RenderWindow &window, int row, int col) {
@@ -63,6 +78,18 @@ void MazeView::drawField(sf::RenderWindow &window, int row, int col) {
         upWall.setPosition(FIELDSIZE*col+MARGIN, FIELDSIZE*row+MARGIN);
         window.draw(upWall);
     }
+}
+
+void MazeView::drawEnd(sf::RenderWindow &window) {
+    int x = FIELDSIZE*maze.getEndPosition().col+MARGIN;
+    int y = FIELDSIZE*maze.getEndPosition().row+MARGIN;
+    end.setPosition(static_cast<float>(x), static_cast<float>(y));
+    window.draw(end);
+}
+
+
+void MazeView::drawInstruct(sf::RenderWindow &window) {
+    window.draw(instruct);
 }
 
 
