@@ -32,7 +32,7 @@ Maze::Maze(int width, int height) {
 
 enum DIR {Right, Down, Left, Up};
 
-bool Maze::create(int startRow, int startCol) {
+bool Maze::create(int startRow, int startCol) { //już za trzecim razem coś działa
     if (!isValid(startRow, startCol)) {return false;}
     start = {startRow, startCol};
 
@@ -79,7 +79,6 @@ bool Maze::create(int startRow, int startCol) {
             toConnect.push_back({toConnect[help1].row-1,toConnect[help1].col});
             break;
         }
-        toConnect.erase(toConnect.begin()+help1);
         options.clear();
     }
 

@@ -13,9 +13,6 @@ struct MazePart { //Prawda oznacza że jest przejście
     bool isConected() {
         return (right || down || left || up);
     }
-    bool isAllConnected() {
-        return (right && down && left && up);
-    }
 };
 
 struct Position {
