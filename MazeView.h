@@ -17,13 +17,12 @@ private:
     sf::RectangleShape leftWall;
     sf::RectangleShape upWall;
 
-    sf::CircleShape c;
-
     void createWall(sf::RectangleShape &wall);
+    void drawField(sf::RenderWindow &window, int row, int col);
 
 public:
     MazeView(Maze &maze);
-    void draw();
+    void draw(sf::RenderWindow &window);
 
     void test(sf::RenderWindow &window);
 };

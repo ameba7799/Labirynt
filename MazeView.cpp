@@ -1,5 +1,6 @@
 #include "MazeView.h"
 
+#define BACKGROUNDCOLOR sf::Color(224,224,224)
 #define WALLCOLOR sf::Color(96,96,96)
 
 
@@ -18,10 +19,6 @@ MazeView::MazeView(Maze& maze) : maze(maze) {
     createWall(upWall);
     upWall.setOrigin(FIELDSIZE*0.2, FIELDSIZE*0.2);
     upWall.setRotation(-90);
-
-    c.setRadius(1);
-    c.setFillColor(sf::Color::Red);
-    c.setPosition(FIELDSIZE, FIELDSIZE);
 }
 
 void MazeView::createWall(sf::RectangleShape& wall) {
@@ -30,7 +27,33 @@ void MazeView::createWall(sf::RectangleShape& wall) {
 }
 
 
-void MazeView::draw() {}
+void MazeView::draw(sf::RenderWindow &window) {
+    window.clear(BACKGROUNDCOLOR);
+    for (int row = 0; row < maze.getWidth(); row++) {
+        for (int col = 0; col < maze.getHeight(); col++) {
+            drawField(window, row, col);
+        }
+    }
+}
+
+void MazeView::drawField(sf::RenderWindow &window, int row, int col) {
+    if (!maze.isRightOpen(row, col)) {
+        rightWall.setPosition(FIELDSIZE*col, FIELDSIZE*row);
+        window.draw(rightWall);
+    }
+    if (!maze.isDownOpen(row, col)) {
+        downWall.setPosition(FIELDSIZE*col, FIELDSIZE*row);
+        window.draw(downWall);
+    }
+    if (!maze.isLeftOpen(row, col)) {
+        leftWall.setPosition(FIELDSIZE*col, FIELDSIZE*row);
+        window.draw(leftWall);
+    }
+    if (!maze.isUpOpen(row, col)) {
+        upWall.setPosition(FIELDSIZE*col, FIELDSIZE*row);
+        window.draw(upWall);
+    }
+}
 
 
 
@@ -46,6 +69,4 @@ void MazeView::test(sf::RenderWindow &window) {
     window.draw(leftWall);
     upWall.setPosition(FIELDSIZE, FIELDSIZE);
     window.draw(upWall);
-
-    window.draw(c);
 }

@@ -2,16 +2,18 @@
 #include "MazeView.h"
 #include "MazeGame.h"
 #include <SFML/Graphics.hpp>
+#include <cstdlib>
+#include <ctime>
 
 
 
 int main() {
-    //Zaczełam robić projekt
+    srand(time(nullptr));
 
-    Maze m(0,0);
+    Maze m(4, 4);
     MazeView view(m);
 
-    sf::RenderWindow window(sf::VideoMode(FIELDSIZE*3, FIELDSIZE*3), "test");
+    sf::RenderWindow window(sf::VideoMode(FIELDSIZE*m.getWidth(), FIELDSIZE*m.getHeight()), "test");
 
     while (window.isOpen())
     {
@@ -23,7 +25,7 @@ int main() {
         }
 
         window.clear(sf::Color::Black);
-        view.test(window);
+        view.draw(window);
         window.display();
     }
 
