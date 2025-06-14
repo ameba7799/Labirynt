@@ -3,6 +3,8 @@
 
 #include "Array2D.h"
 
+enum Direction {Right, Down, Left, Up};
+
 
 struct MazePart { //Prawda oznacza że jest przejście
     bool right = false;
@@ -10,9 +12,7 @@ struct MazePart { //Prawda oznacza że jest przejście
     bool left = false;
     bool up = false;
 
-    bool isConected() {
-        return (right || down || left || up);
-    }
+    bool isConnected() const;
 };
 
 struct Position {
@@ -26,16 +26,20 @@ private:
     Array2D<MazePart> maze{0,0};
     int width;
     int height;
-    Position start;
-    Position end;
+    Position start = {0,0};
+    Position end = {0,0};
 
     bool isValid(int row, int col) const;
-    void clear();
+    bool isUnconnected(int row, int col) const;
+    void clearMaze();
+    void setStart();
+    void setEnd();
+    Position connect(int row, int col, Direction dir);
 
 public:
     Maze();
     Maze(int width, int height);
-    bool create(int startRow, int startCol);
+    void create();
     int getWidth() const;
     int getHeight() const;
     bool isRightOpen(int row, int col) const;

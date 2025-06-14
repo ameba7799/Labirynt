@@ -10,10 +10,13 @@
 int main() {
     srand(time(nullptr));
 
-    Maze m(4, 4);
+    Maze m(10, 10);
     MazeView view(m);
 
-    sf::RenderWindow window(sf::VideoMode(FIELDSIZE*m.getWidth(), FIELDSIZE*m.getHeight()), "test");
+    int winWidth = FIELDSIZE*(m.getWidth()+0.4);
+    int winHeight = FIELDSIZE*(m.getHeight()+0.4);
+    sf::RenderWindow window(sf::VideoMode(winWidth, winHeight), "LABIRYNT", sf::Style::None);
+    //Hi hi hi - zabrałam użytkownikowi całą kontrolę nad okienkiem
 
     while (window.isOpen())
     {
