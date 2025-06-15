@@ -4,8 +4,6 @@
 #include "Array2D.h"
 #include "Parameters.h"
 
-enum Direction {Right, Down, Left, Up};
-
 
 struct MazePart { //Prawda oznacza że jest przejście
     bool right = false;
@@ -29,8 +27,8 @@ private:
     Array2D<MazePart> maze{0,0};
     int height;
     int width;
-    Position start = {0,0};
-    Position end = {0,0};
+    Position start = {1,1};
+    Position end = {1,1};
     Position currentPos = {0,0};
 
     bool isValid(int row, int col) const;
@@ -53,6 +51,11 @@ public:
     Position getStartPosition() const;
     Position getEndPosition() const;
     Position getCurrentPosition() const;
+
+    int moveRight();
+    int moveDown();
+    int moveLeft();
+    int moveUp();
 };
 
 

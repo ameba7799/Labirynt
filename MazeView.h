@@ -4,13 +4,21 @@
 #include "Maze.h"
 #include <SFML/Graphics.hpp>
 #include "Parameters.h"
+#include <deque>
 
 
+struct Move {
+    Direction dir;
+    int dist;
+};
 
 
 class MazeView {
 private:
     Maze &maze;
+    std::deque<Move> moves{0};
+    int moveX = 0;
+    int moveY = 0;
 
     sf::RectangleShape background;
     sf::RectangleShape rightWall;
@@ -22,19 +30,25 @@ private:
     sf::Sprite instruct;
     sf::Texture instructTexture;
 
+    sf::CircleShape player;
+
     void createWall(sf::RectangleShape &wall);
     void createBackground();
     void createEnd();
     void createInstructions();
+    void createPlayer();
+
+    void drawBackground(sf::RenderWindow &window);
     void drawField(sf::RenderWindow &window, int row, int col);
     void drawEnd(sf::RenderWindow &window);
+    void moveView(sf::RenderWindow &window);
 
 public:
     MazeView(Maze &maze);
     void drawGame(sf::RenderWindow &window);
     void drawInstruct(sf::RenderWindow &window);
+    void addMove(Direction dir, int move);
 
-    void test(sf::RenderWindow &window);
 };
 
 

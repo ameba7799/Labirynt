@@ -21,6 +21,8 @@ MazeView::MazeView(Maze& maze) : maze(maze) {
     createEnd();
 
     createInstructions();
+
+    createPlayer();
 }
 
 void MazeView::createWall(sf::RectangleShape& wall) {
@@ -31,7 +33,6 @@ void MazeView::createWall(sf::RectangleShape& wall) {
 void MazeView::createBackground() {
     background.setSize(sf::Vector2f(FIELDSIZE*maze.getWidth(), FIELDSIZE*maze.getHeight()));
     background.setFillColor(BACKGROUNDCOLOR);
-    background.setPosition(sf::Vector2f(MARGIN, MARGIN));
 }
 
 void MazeView::createEnd() {
@@ -47,10 +48,19 @@ void MazeView::createInstructions() {
     instruct.setPosition(0,0);
 }
 
+void MazeView::createPlayer() {
+    player.setRadius(FIELDSIZE*0.2);
+    player.setFillColor(PLAYERCOLOR);
+    player.setOrigin(-FIELDSIZE*0.3, -FIELDSIZE*0.3);
+    player.setPosition(PLAYERPOSITION);
+}
+
+
 
 void MazeView::drawGame(sf::RenderWindow &window) {
+    moveView(window);
     window.clear(WALLCOLOR);
-    window.draw(background);
+    drawBackground(window);
 
     for (int row = 0; row < maze.getHeight(); row++) {
         for (int col = 0; col < maze.getWidth(); col++) {
@@ -59,30 +69,57 @@ void MazeView::drawGame(sf::RenderWindow &window) {
     }
 
     drawEnd(window);
+    window.draw(player);
 }
+
+void MazeView::moveView(sf::RenderWindow &window) {
+    if (moves.size() == 0) {return;}
+    switch (moves.front().dir) {
+    case Right:
+        ++moveX;
+        break;
+    case Down:
+        ++moveY;
+        break;
+    case Left:
+        --moveX;
+        break;
+    case Up:
+        --moveY;
+        break;
+    }
+    if (--moves.front().dist == 0) {moves.pop_front();}
+    window.setPosition(sf::Vector2i(moveX,moveY));
+}
+
+void MazeView::drawBackground(sf::RenderWindow& window) {
+    background.setPosition(MARGIN-moveX, MARGIN-moveY);
+    window.draw(background);
+}
+
 
 void MazeView::drawField(sf::RenderWindow &window, int row, int col) {
     if (!maze.isRightOpen(row, col)) {
-        rightWall.setPosition(FIELDSIZE*col+MARGIN, FIELDSIZE*row+MARGIN);
+        rightWall.setPosition(FIELDSIZE*col+MARGIN-moveX, FIELDSIZE*row+MARGIN-moveY);
         window.draw(rightWall);
     }
     if (!maze.isDownOpen(row, col)) {
-        downWall.setPosition(FIELDSIZE*col+MARGIN, FIELDSIZE*row+MARGIN);
+        downWall.setPosition(FIELDSIZE*col+MARGIN-moveX, FIELDSIZE*row+MARGIN-moveY);
         window.draw(downWall);
     }
     if (!maze.isLeftOpen(row, col)) {
-        leftWall.setPosition(FIELDSIZE*col+MARGIN, FIELDSIZE*row+MARGIN);
+        leftWall.setPosition(FIELDSIZE*col+MARGIN-moveX, FIELDSIZE*row+MARGIN-moveY);
         window.draw(leftWall);
     }
     if (!maze.isUpOpen(row, col)) {
-        upWall.setPosition(FIELDSIZE*col+MARGIN, FIELDSIZE*row+MARGIN);
+        upWall.setPosition(FIELDSIZE*col+MARGIN-moveX, FIELDSIZE*row+MARGIN-moveY);
         window.draw(upWall);
     }
 }
 
 void MazeView::drawEnd(sf::RenderWindow &window) {
-    int x = FIELDSIZE*maze.getEndPosition().col+MARGIN;
-    int y = FIELDSIZE*maze.getEndPosition().row+MARGIN;
+    int x = FIELDSIZE*maze.getEndPosition().col+MARGIN-moveX;
+    int y = FIELDSIZE*maze.getEndPosition().row+MARGIN-moveY;
     end.setPosition(static_cast<float>(x), static_cast<float>(y));
     window.draw(end);
 }
@@ -93,17 +130,7 @@ void MazeView::drawInstruct(sf::RenderWindow &window) {
 }
 
 
-
-
-
-//Sprawćmy czy to działa
-void MazeView::test(sf::RenderWindow &window) {
-    rightWall.setPosition(FIELDSIZE, FIELDSIZE);
-    window.draw(rightWall);
-    downWall.setPosition(FIELDSIZE, FIELDSIZE);
-    window.draw(downWall);
-    leftWall.setPosition(FIELDSIZE, FIELDSIZE);
-    window.draw(leftWall);
-    upWall.setPosition(FIELDSIZE, FIELDSIZE);
-    window.draw(upWall);
+void MazeView::addMove(Direction dir, int move) {
+    Move newMove = {dir, move*FIELDSIZE};
+    moves.push_back(newMove);
 }

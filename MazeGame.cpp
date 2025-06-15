@@ -7,8 +7,10 @@ MazeGame::MazeGame(Maze& maze, MazeView& view) : maze(maze), view(view) {
 
 
 void MazeGame::play() {
-    window.create(sf::VideoMode(WINWIDTH, WINHEIGHT), "LABIRYNT", sf::Style::None);
-    //Hi hi hi - zabrałam użytkownikowi całą kontrolę nad okienkiem
+    sf::ContextSettings settings;
+    settings.antialiasingLevel = 3;
+    window.create(sf::VideoMode(WINWIDTH, WINHEIGHT), "LABIRYNT", sf::Style::None, settings);
+    window.setPosition(sf::Vector2i(0,0));
 
     sf::Event event;
     while (window.isOpen()) {
@@ -37,17 +39,19 @@ void MazeGame::gameControl(sf::Event &event) {
             started = true;
             return;
         case sf::Keyboard::Right: case sf::Keyboard::D:
-            //TODO move right
+            view.addMove(Right, maze.moveRight());
                 return;
         case sf::Keyboard::Down: case sf::Keyboard::S:
-            //TODO move down
+            view.addMove(Down, maze.moveDown());
                 return;
         case sf::Keyboard::Left: case sf::Keyboard::A:
-            //TODO move left
+            view.addMove(Left, maze.moveLeft());
                 return;
         case sf::Keyboard::Up: case sf::Keyboard::W:
-            //TODO move up
+            view.addMove(Up, maze.moveUp());
                 return;
+        default:
+            return;
         }
     }
 }
