@@ -7,9 +7,7 @@ MazeGame::MazeGame(Maze& maze, MazeView& view) : maze(maze), view(view) {
 
 
 void MazeGame::play() {
-    sf::ContextSettings settings;
-    settings.antialiasingLevel = 3;
-    window.create(sf::VideoMode(WINWIDTH, WINHEIGHT), "LABIRYNT", sf::Style::None, settings);
+    window.create(sf::VideoMode(WINWIDTH, WINHEIGHT), "LABIRYNT", sf::Style::None);
     window.setPosition(sf::Vector2i(0,0));
 
     sf::Event event;

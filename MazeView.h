@@ -31,16 +31,20 @@ private:
     sf::Texture instructTexture;
 
     sf::CircleShape player;
+    sf::CircleShape arrow;
 
     void createWall(sf::RectangleShape &wall);
     void createBackground();
     void createEnd();
     void createInstructions();
     void createPlayer();
+    void createArrow();
 
     void drawBackground(sf::RenderWindow &window);
     void drawField(sf::RenderWindow &window, int row, int col);
     void drawEnd(sf::RenderWindow &window);
+    void drawArrow(sf::RenderWindow &window);
+
     void moveView(sf::RenderWindow &window);
 
 public:

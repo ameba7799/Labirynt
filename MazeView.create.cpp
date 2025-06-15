@@ -3,53 +3,60 @@
 
 MazeView::MazeView(Maze& maze) : maze(maze) {
     createWall(rightWall);
-    rightWall.setOrigin(-FIELDSIZE*0.8, FIELDSIZE*0.2);
+    rightWall.setOrigin(RIGHTWALLPOSITION);
 
     createWall(downWall);
-    downWall.setOrigin(FIELDSIZE, FIELDSIZE*0.2);
+    downWall.setOrigin(DOWNWALLPOSITION);
     downWall.setRotation(-90);
 
     createWall(leftWall);
-    leftWall.setOrigin(0, FIELDSIZE*0.2);
+    leftWall.setOrigin(LEFTWALLPOSITION);
 
     createWall(upWall);
-    upWall.setOrigin(FIELDSIZE*0.2, FIELDSIZE*0.2);
+    upWall.setOrigin(UPWALLPOSITION);
     upWall.setRotation(-90);
 
     createBackground();
     createEnd();
-
     createInstructions();
-
     createPlayer();
+    createArrow();
 }
 
 void MazeView::createWall(sf::RectangleShape& wall) {
-    wall.setSize(sf::Vector2f(FIELDSIZE*0.2, FIELDSIZE*1.4));
+    wall.setSize(WALLSIZE);
     wall.setFillColor(WALLCOLOR);
 }
 
 void MazeView::createBackground() {
-    background.setSize(sf::Vector2f(FIELDSIZE*maze.getWidth(), FIELDSIZE*maze.getHeight()));
+    background.setSize(BACKGROUNDSIZE(maze));
     background.setFillColor(BACKGROUNDCOLOR);
 }
 
 void MazeView::createEnd() {
     end.setRadius(FIELDSIZE*0.2);
     end.setFillColor(ENDCOLOR);
-    end.setOrigin(-FIELDSIZE*0.3, -FIELDSIZE*0.3);
+    end.setOrigin(CIRCLEORIGIN);
 }
 
 void MazeView::createInstructions() {
-    instructTexture.loadFromFile("../instrukcje.png");
+    instructTexture.loadFromFile(TEXTUREFILE);
     instruct.setTexture(instructTexture);
-    instruct.setScale(WINWIDTH/instructTexture.getSize().x, WINHEIGHT/instructTexture.getSize().y);
+    instruct.setScale(INSTRUCTSCALE(instructTexture));
     instruct.setPosition(0,0);
 }
 
 void MazeView::createPlayer() {
     player.setRadius(FIELDSIZE*0.2);
     player.setFillColor(PLAYERCOLOR);
-    player.setOrigin(-FIELDSIZE*0.3, -FIELDSIZE*0.3);
+    player.setOrigin(CIRCLEORIGIN);
     player.setPosition(PLAYERPOSITION);
+}
+
+void MazeView::createArrow() {
+    arrow.setRadius(FIELDSIZE*0.1);
+    arrow.setPointCount(3);
+    arrow.setFillColor(ENDCOLOR);
+    arrow.setOrigin(ARROWORIGIN);
+    arrow.setPosition(ARROWPOSITION);
 }
