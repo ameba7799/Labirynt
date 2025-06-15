@@ -22,9 +22,13 @@ find_package(SFML 2 COMPONENTS graphics audio REQUIRED)
 add_executable(LABIRYNT
         main.cpp
         Maze.h
-        Maze.cpp
+        Maze.create.cpp
+        Maze.getters.cpp
+        Maze.moves.cpp
         MazeView.h
-        MazeView.cpp
+        MazeView.create.cpp
+        MazeView.moves.cpp
+        MazeView.draw.cpp
         MazeGame.h
         MazeGame.cpp
         Array2D.h

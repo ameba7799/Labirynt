@@ -14,6 +14,8 @@ void MazeGame::play() {
 
     sf::Event event;
     while (window.isOpen()) {
+        if (view.isEndFind()) {maze.create();}
+
         while (window.pollEvent(event)) {
             gameControl(event);
         }

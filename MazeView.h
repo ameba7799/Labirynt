@@ -9,7 +9,7 @@
 
 struct Move {
     Direction dir;
-    int dist;
+    float dist;
 };
 
 
@@ -48,6 +48,7 @@ public:
     void drawGame(sf::RenderWindow &window);
     void drawInstruct(sf::RenderWindow &window);
     void addMove(Direction dir, int move);
+    bool isEndFind();
 
 };
 

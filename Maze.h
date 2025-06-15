@@ -27,9 +27,9 @@ private:
     Array2D<MazePart> maze{0,0};
     int height;
     int width;
-    Position start = {1,1};
-    Position end = {1,1};
-    Position currentPos = {0,0};
+    Position start;
+    Position end;
+    Position currentPos;
 
     bool isValid(int row, int col) const;
     bool isUnconnected(int row, int col) const;
