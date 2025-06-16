@@ -15,6 +15,7 @@
 #define ONCOL(x) ((x+MARGIN)/FIELDSIZE)
 
 #define TEXTUREFILE "../instrukcje.png"
+#define ICONFILE "../Labirynt.bmp"
 
 #define PLAYERPOSITION sf::Vector2f(FIELDSIZE+MARGIN,FIELDSIZE+MARGIN)
 #define ARROWPOSITION sf::Vector2f(FIELDSIZE*1.5+MARGIN,FIELDSIZE*1.5+MARGIN)

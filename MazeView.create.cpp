@@ -21,6 +21,8 @@ MazeView::MazeView(Maze& maze) : maze(maze) {
     createInstructions();
     createPlayer();
     createArrow();
+
+    createIcon();
 }
 
 void MazeView::createWall(sf::RectangleShape& wall) {
@@ -59,4 +61,8 @@ void MazeView::createArrow() {
     arrow.setFillColor(ENDCOLOR);
     arrow.setOrigin(ARROWORIGIN);
     arrow.setPosition(ARROWPOSITION);
+}
+
+void MazeView::createIcon() {
+    icon.loadFromFile(ICONFILE);
 }

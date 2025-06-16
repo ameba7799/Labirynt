@@ -33,12 +33,15 @@ private:
     sf::CircleShape player;
     sf::CircleShape arrow;
 
+    sf::Image icon;
+
     void createWall(sf::RectangleShape &wall);
     void createBackground();
     void createEnd();
     void createInstructions();
     void createPlayer();
     void createArrow();
+    void createIcon();
 
     void drawBackground(sf::RenderWindow &window);
     void drawField(sf::RenderWindow &window, int row, int col);
@@ -53,6 +56,7 @@ public:
     void drawInstruct(sf::RenderWindow &window);
     void addMove(Direction dir, int move);
     bool isEndFind();
+    void setWindowIcon(sf::RenderWindow &window);
 
 };
 

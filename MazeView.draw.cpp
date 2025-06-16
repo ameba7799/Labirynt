@@ -70,3 +70,7 @@ void MazeView::drawInstruct(sf::RenderWindow &window) {
     window.draw(instruct);
 }
 
+
+void MazeView::setWindowIcon(sf::RenderWindow &window) {
+    window.setIcon(20,20, icon.getPixelsPtr());
+}

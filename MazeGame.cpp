@@ -8,6 +8,7 @@ MazeGame::MazeGame(Maze& maze, MazeView& view) : maze(maze), view(view) {
 
 void MazeGame::play() {
     window.create(sf::VideoMode(WINWIDTH, WINHEIGHT), "LABIRYNT", sf::Style::None);
+    view.setWindowIcon(window);
     window.setPosition(sf::Vector2i(0,0));
 
     sf::Event event;
