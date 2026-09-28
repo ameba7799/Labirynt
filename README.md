@@ -1,6 +1,3 @@
-# WT11_Amelia_Bareja
-
-
 # Labirynt
 
 Moim pomysłem na projekt jest gra - labirynt.
